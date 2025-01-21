@@ -26,6 +26,13 @@ app.post('/create',(req,res)=>{
 app.get('/edit/:filename',(req,res)=>{
     res.render("edit",{filename: req.params.filename});
 })
+
+app.post('/edit',(req,res)=>{
+    fs.rename(`./files/${req.body.previous}`,`./files/${req.body.newName}`,function(err){
+        res.redirect('/');  
+                // console.log(req.body)
+    })
+})
 app.get('/files/:filename',(req,res)=>{
     fs.readFile(`./files/${req.params.filename}`, "utf-8",function(err,fileData){
         res.render("show",{filename: req.params.filename, data: fileData});
